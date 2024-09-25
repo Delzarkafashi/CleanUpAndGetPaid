@@ -1,42 +1,82 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.parent {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto; /* Låt body anpassa sig efter innehållet */
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+}
+
+.header {
+  grid-area: 1 / 1 / 4 / 13; 
+  background-color: #4CAF50; 
+  display: flex; /* Flexbox för centrerad text */
+  align-items: center; /* Vertikal centrering */
+  justify-content: center; /* Horisontell centrering */
+  color: white; /* Textfärg */
+  height: 200px; 
+}
+
+.body {
+  grid-area: 4 / 1 / 11 / 13;
+  background-color: #f2f2f2; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto; 
+  min-height: 800px; 
+}
+
+.footer {
+  grid-area: 11 / 1 / 13 / 13;
+  background-color: #333; 
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px; 
+}
+
+
+.input-area {
+  grid-area: 1 / 2 / 2 / 12;
+  background-color: #ffcc00; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  grid-area: 2 / 2 / 4 / 4;
+  background-color: #2196F3; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.search-bar {
+  grid-area: 2 / 4 / 3 / 10;
+  background-color: #e91e63;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.login-signin {
+  grid-area: 2 / 10 / 3 / 12;
+  background-color: #ff5722;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
 }
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+.navbar {
+  grid-area: 3 / 4 / 4 / 11;
+  background-color: #9c27b0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
 }
