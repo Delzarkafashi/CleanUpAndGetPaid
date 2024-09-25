@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35303.130
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CleanUpAndGetPaid-backend", "CleanUpAndGetPaid-backend\CleanUpAndGetPaid-backend.csproj", "{41A4FA41-26FE-4EFA-A0B8-F3A41760F7DB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{41A4FA41-26FE-4EFA-A0B8-F3A41760F7DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41A4FA41-26FE-4EFA-A0B8-F3A41760F7DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41A4FA41-26FE-4EFA-A0B8-F3A41760F7DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41A4FA41-26FE-4EFA-A0B8-F3A41760F7DB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9E3CDF74-D801-4AB8-B83B-D7685D0D6AA0}
+	EndGlobalSection
+EndGlobal
