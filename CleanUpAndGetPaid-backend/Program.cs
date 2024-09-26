@@ -1,44 +1,79 @@
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Lägg till tjänster i containern
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IItemService, ItemService>(); // Lägg till din tjänst här
+
+// CORS-konfiguration
+// /*https://localhost:5001/swagger/index.html*/
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder => builder.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Konfigurera HTTP-förfrågningspipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseHttpsRedirection(); // Aktivera HTTPS-redirection
+app.UseCors("AllowAllOrigins"); // Aktivera CORS-policyn här
 
-var summaries = new[]
+// Endpoint för att lägga till ett objekt
+app.MapPost("/api/items", async (Item item, IItemService itemService, ILogger<Program> logger) =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+    logger.LogInformation("Received item: {@Item}", item); // Logga objektet
 
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+    try
+    {
+        await itemService.AddItemAsync(item);
+        logger.LogInformation("Item added successfully.");
+        return Results.Created($"/api/items/{item.Id}", item);
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "Error while adding item.");
+        return Results.BadRequest(new { Message = ex.Message });
+    }
+});
 
+// Starta applikationen
 app.Run();
 
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+// Modeller
+public class Item
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    public int Id { get; set; } // Endast om du genererar Id
+    public string? Name { get; set; } // Gör 'Name' nullable
+    public string? Description { get; set; } // Gör 'Description' nullable
 }
+
+// Implementera din tjänst för att hantera logik
+public interface IItemService
+{
+    Task AddItemAsync(Item item);
+}
+
+public class ItemService : IItemService
+{
+    public Task AddItemAsync(Item item)
+    {
+        // Logik för att spara objekt i databasen
+        return Task.CompletedTask;
+    }
+}
+
+

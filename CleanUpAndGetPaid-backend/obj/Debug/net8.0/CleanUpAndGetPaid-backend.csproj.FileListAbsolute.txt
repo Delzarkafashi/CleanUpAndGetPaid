@@ -31,3 +31,4 @@ C:\Users\Delza\OneDrive\Skrivbord\allt\webbutveklining\React Native for Web inl�
 C:\Users\Delza\OneDrive\Skrivbord\allt\webbutveklining\React Native for Web inläming\CleanUpAndGetPaid-skolan\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\CleanUpAndGetPaid-backend.pdb
 C:\Users\Delza\OneDrive\Skrivbord\allt\webbutveklining\React Native for Web inläming\CleanUpAndGetPaid-skolan\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\CleanUpAndGetPaid-backend.genruntimeconfig.cache
 C:\Users\Delza\OneDrive\Skrivbord\allt\webbutveklining\React Native for Web inläming\CleanUpAndGetPaid-skolan\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\ref\CleanUpAndGetPaid-backend.dll
+C:\Users\Delza\OneDrive\Skrivbord\allt\webbutveklining\React Native for Web inläming\CleanUpAndGetPaid-skolan\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\CleanUpAndGetPaid-backend.sourcelink.json
