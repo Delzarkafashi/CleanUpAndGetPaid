@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import App from './App';
-import Home from './Home';
-import ViewItems from './ViewItems';
-import AddItem from './AddItem';
+import Home from './Pages/Home';
+import ViewItems from './Pages/ViewItems';
+import AddItem from './Pages/AddItem';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>

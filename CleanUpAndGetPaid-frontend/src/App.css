@@ -1,7 +1,7 @@
 .parent {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: auto; /* Låt body anpassa sig efter innehållet */
+  grid-template-rows: auto;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
 }
@@ -9,10 +9,11 @@
 .header {
   grid-area: 1 / 1 / 4 / 13; 
   background-color: #4CAF50; 
-  display: flex; /* Flexbox för centrerad text */
-  align-items: center; /* Vertikal centrering */
-  justify-content: center; /* Horisontell centrering */
-  color: white; /* Textfärg */
+  display: grid; /* Grid istället för flex för att hantera flera element */
+  grid-template-columns: repeat(12, 1fr); /* Fördela 12 kolumner över hela headern */
+  grid-template-rows: auto;
+  align-items: center; 
+  color: white;
   height: 200px; 
 }
 
@@ -36,44 +37,47 @@
   height: 200px; 
 }
 
-
 .input-area {
-  grid-area: 1 / 2 / 2 / 12;
+  grid-area: 1 / 1 / 2 / 13; /* Ändrat till att sträcka sig över hela bredden */
   background-color: #ffcc00; 
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 2rem; /* Ökat höjden för att matcha navigationsbaren */
 }
 
 .logo {
-  grid-area: 2 / 2 / 4 / 4;
+  grid-area: 2 / 1 / 3 / 4;
   background-color: #2196F3; 
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
+  height: 6rem;
 }
 
 .search-bar {
-  grid-area: 2 / 4 / 3 / 10;
+  grid-area: 2 / 4 / 3 / 9;
   background-color: #e91e63;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
+  height: 4rem;
 }
 
 .login-signin {
-  grid-area: 2 / 10 / 3 / 12;
+  grid-area: 2 / 9 / 3 / 12;
   background-color: #ff5722;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
+  height: 2rem;
 }
 
 .navbar {
-  grid-area: 3 / 4 / 4 / 11;
+  grid-area: 3 / 2 / 4 / 11;
   background-color: #9c27b0;
   display: flex;
   align-items: center;
