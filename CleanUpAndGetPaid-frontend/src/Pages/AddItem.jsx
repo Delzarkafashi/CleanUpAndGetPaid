@@ -1,22 +1,30 @@
 import React, { useState } from 'react';
+import axios from 'axios'; // Glöm inte att importera axios
 import Header from '../components/Header';
 
 const AddItem = () => {
     const [itemName, setItemName] = useState('');
     const [itemDescription, setItemDescription] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Här kan du skicka data till backend för att lägga till ett objekt
-        console.log("Item added:", itemName, itemDescription);
-        // Nollställ fälten
-        setItemName('');
-        setItemDescription('');
+        try {
+            const response = await axios.post('http://localhost:5162/api/items', {
+                name: itemName,
+                description: itemDescription,
+            });
+            
+            console.log("Item added:", response.data);
+            setItemName('');
+            setItemDescription('');
+        } catch (error) {
+            console.error("There was an error adding the item!", error);
+        }
     };
 
     return (
         <div className="add-item">
-            <Header /> {/* Använd Header-komponenten här */}
+            <Header />
             <div style={styles.container}>
                 <h2 style={styles.title}>Add New Item</h2>
                 <form onSubmit={handleSubmit} style={styles.form}>
