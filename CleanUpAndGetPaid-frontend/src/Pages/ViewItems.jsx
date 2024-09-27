@@ -1,16 +1,28 @@
-import React from 'react';
-import Header from '../components/Header'; 
+import React, { useEffect, useState } from 'react';
+import Header from '../components/Header';
 
 const ViewItems = () => {
+    const [items, setItems] = useState([]);
+
+    useEffect(() => {
+        // Fetch items from backend API
+        fetch('http://localhost:5162/items')
+            .then(response => response.json())
+            .then(data => setItems(data))
+            .catch(error => console.error('Error fetching items:', error));
+    }, []);
+
     return (
         <div className="view-items">
             <Header /> 
             <div className="items-list">
                 <h2 style={styles.title}>Here are the available items for sale:</h2>
                 <ul style={styles.itemList}>
-                    <li style={styles.listItem}>Item 1</li>
-                    <li style={styles.listItem}>Item 2</li>
-                    <li style={styles.listItemLast}>Item 3</li>
+                    {items.map((item) => (
+                        <li key={item.id} style={styles.listItem}>
+                            {item.name}: {item.description}
+                        </li>
+                    ))}
                 </ul>
             </div>
             <footer className="footer">Footer</footer>

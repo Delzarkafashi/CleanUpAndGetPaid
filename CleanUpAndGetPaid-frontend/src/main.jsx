@@ -6,6 +6,7 @@ import Home from './Pages/Home';
 import ViewItems from './Pages/ViewItems';
 import AddItem from './Pages/AddItem';
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <Router>
@@ -13,6 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
                 <Route path="/" element={<Home />} />
                 <Route path="/view-items" element={<ViewItems />} />
                 <Route path="/add-item" element={<AddItem />} />
+                
             </Routes>
         </Router>
     </React.StrictMode>

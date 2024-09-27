@@ -4,19 +4,39 @@ import Header from '../components/Header';
 const AddItem = () => {
     const [itemName, setItemName] = useState('');
     const [itemDescription, setItemDescription] = useState('');
+    const [message, setMessage] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Här kan du skicka data till backend för att lägga till ett objekt
-        console.log("Item added:", itemName, itemDescription);
-        // Nollställ fälten
-        setItemName('');
-        setItemDescription('');
+
+        const newItem = {
+            name: itemName,
+            description: itemDescription,
+        };
+
+        // Send POST request to backend API
+        fetch('http://localhost:5162/items', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newItem),
+        })
+        .then(response => response.json())
+        .then(data => {
+            setMessage(`Item added successfully: ${data.name}`);
+            setItemName('');
+            setItemDescription('');
+        })
+        .catch(error => {
+            console.error('Error adding item:', error);
+            setMessage('Failed to add item.');
+        });
     };
 
     return (
         <div className="add-item">
-            <Header /> {/* Använd Header-komponenten här */}
+            <Header /> {/* Use Header component here */}
             <div style={styles.container}>
                 <h2 style={styles.title}>Add New Item</h2>
                 <form onSubmit={handleSubmit} style={styles.form}>
@@ -41,6 +61,7 @@ const AddItem = () => {
                     </div>
                     <button type="submit" style={styles.button}>Add Item</button>
                 </form>
+                {message && <p>{message}</p>}
             </div>
             <footer className="footer">Footer</footer>
         </div>
