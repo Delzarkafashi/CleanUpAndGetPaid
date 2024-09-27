@@ -31,3 +31,37 @@ C:\Users\Delza\OneDrive\Skrivbord\allt\webbutveklining\React Native for Web inl�
 C:\Users\Delza\OneDrive\Skrivbord\allt\webbutveklining\React Native for Web inläming\CleanUpAndGetPaid-skolan\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\CleanUpAndGetPaid-backend.pdb
 C:\Users\Delza\OneDrive\Skrivbord\allt\webbutveklining\React Native for Web inläming\CleanUpAndGetPaid-skolan\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\CleanUpAndGetPaid-backend.genruntimeconfig.cache
 C:\Users\Delza\OneDrive\Skrivbord\allt\webbutveklining\React Native for Web inläming\CleanUpAndGetPaid-skolan\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\ref\CleanUpAndGetPaid-backend.dll
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\bin\Debug\net8.0\appsettings.Development.json
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\bin\Debug\net8.0\appsettings.json
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\bin\Debug\net8.0\CleanUpAndGetPaid-backend.exe
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\bin\Debug\net8.0\CleanUpAndGetPaid-backend.deps.json
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\bin\Debug\net8.0\CleanUpAndGetPaid-backend.runtimeconfig.json
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\bin\Debug\net8.0\CleanUpAndGetPaid-backend.dll
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\bin\Debug\net8.0\CleanUpAndGetPaid-backend.pdb
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\bin\Debug\net8.0\Microsoft.AspNetCore.OpenApi.dll
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\bin\Debug\net8.0\Microsoft.OpenApi.dll
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\CleanUpAndGetPaid-backend.csproj.AssemblyReference.cache
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\CleanUpAndGetPaid-backend.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\CleanUpAndGetPaid-backend.AssemblyInfoInputs.cache
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\CleanUpAndGetPaid-backend.AssemblyInfo.cs
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\CleanUpAndGetPaid-backend.csproj.CoreCompileInputs.cache
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\CleanUpAndGetPaid-backend.MvcApplicationPartsAssemblyInfo.cs
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\CleanUpAndGetPaid-backend.MvcApplicationPartsAssemblyInfo.cache
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\CleanUpAndGetPaid-backend.sourcelink.json
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\staticwebassets.build.json
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\staticwebassets.development.json
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\staticwebassets\msbuild.CleanUpAndGetPaid-backend.Microsoft.AspNetCore.StaticWebAssets.props
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\staticwebassets\msbuild.build.CleanUpAndGetPaid-backend.props
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.CleanUpAndGetPaid-backend.props
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.CleanUpAndGetPaid-backend.props
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\staticwebassets.pack.json
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\scopedcss\bundle\CleanUpAndGetPaid-backend.styles.css
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\CleanUpA.F178B700.Up2Date
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\CleanUpAndGetPaid-backend.dll
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\refint\CleanUpAndGetPaid-backend.dll
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\CleanUpAndGetPaid-backend.pdb
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\CleanUpAndGetPaid-backend.genruntimeconfig.cache
+c:\Users\46707\Documents\CleanUpAndGetPaid\CleanUpAndGetPaid\CleanUpAndGetPaid-backend\obj\Debug\net8.0\ref\CleanUpAndGetPaid-backend.dll
