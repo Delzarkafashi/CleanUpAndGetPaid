@@ -8,13 +8,13 @@ const AddItem = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
+    
         const newItem = {
             name: itemName,
             description: itemDescription,
         };
-
-        // Send POST request to backend API
+    
+        // Skicka POST-förfrågan till backend API
         fetch('http://localhost:5162/items', {
             method: 'POST',
             headers: {
@@ -22,7 +22,12 @@ const AddItem = () => {
             },
             body: JSON.stringify(newItem),
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
         .then(data => {
             setMessage(`Item added successfully: ${data.name}`);
             setItemName('');
@@ -33,6 +38,7 @@ const AddItem = () => {
             setMessage('Failed to add item.');
         });
     };
+    
 
     return (
         <div className="add-item">
