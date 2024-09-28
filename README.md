@@ -12,7 +12,7 @@ Detta är en React-applikation där användare kan lista sina oanvända saker ti
 1. Klona repo: `git clone https://github.com/ditt-repo/CleanUpAndGetPaid.git`
 -Beroenden:
 2. Installera  `npm install`
-3. Instellera `Install-Package MySql.Data` för databasen
+3. Instellera `dotnet add package MySql.Data` för databasen
 4. Starta utvecklingsservern: `npm run dev`
 
 
