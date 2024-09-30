@@ -3,71 +3,227 @@ import Header from '../components/Header';
 
 const ViewItems = () => {
     const [items, setItems] = useState([]);
+    const [filteredItems, setFilteredItems] = useState([]);
+    const [editingItem, setEditingItem] = useState(null); 
+    const [updatedName, setUpdatedName] = useState('');
+    const [updatedDescription, setUpdatedDescription] = useState('');
 
+    // Fetch items from backend
     useEffect(() => {
-        // Fetch items from backend API
         fetch('http://localhost:5162/items')
             .then(response => response.json())
-            .then(data => setItems(data))
+            .then(data => {
+                setItems(data);
+                setFilteredItems(data);  
+            })
             .catch(error => console.error('Error fetching items:', error));
     }, []);
 
+    // Handle search functionality
+    const handleSearch = (searchTerm) => {
+        const filtered = items.filter(item =>
+            item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            item.description.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        setFilteredItems(filtered);
+    };
+
+    // Handle delete item
+    const handleDelete = (id) => {
+        fetch(`http://localhost:5162/items/${id}`, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Failed to delete item: ${response.statusText}`);
+                }
+                setItems(items.filter(item => item.id !== id));
+                setFilteredItems(filteredItems.filter(item => item.id !== id));
+            })
+            .catch(error => {
+                console.error('Error deleting item:', error.message);
+            });
+    };
+
+    // Handle update item
+    const handleUpdate = (id) => {
+        const updatedItem = { name: updatedName, description: updatedDescription };
+
+        fetch(`http://localhost:5162/items/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedItem)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Failed to update item: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const updatedList = items.map(item =>
+                    item.id === id ? { ...item, name: data.name, description: data.description } : item
+                );
+                setItems(updatedList);
+                setFilteredItems(updatedList);
+                setEditingItem(null); 
+            })
+            .catch(error => {
+                console.error('Error updating item:', error.message);
+            });
+    };
+
     return (
-        <div className="view-items">
-            <Header /> 
-            <div className="items-list">
-                <h2 style={styles.title}>Here are the available items for sale:</h2>
-                <ul style={styles.itemList}>
-                    {items.map((item) => (
-                        <li key={item.id} style={styles.listItem}>
-                            {item.name}: {item.description}
-                        </li>
+        <div className="view-items-page" style={styles.container}>
+            <Header onSearch={handleSearch} /> 
+            
+           
+            <div style={styles.container}>
+                <h1 style={styles.title}>Available Items</h1>
+                <div style={styles.itemsGrid}>
+                    {filteredItems.map((item) => (
+                        <div key={item.id} style={styles.itemCard}>
+                            {editingItem === item.id ? (
+                                <div>
+                                    <input
+                                        type="text"
+                                        value={updatedName}
+                                        onChange={(e) => setUpdatedName(e.target.value)}
+                                        placeholder="Update Name"
+                                        style={styles.input}
+                                    />
+                                    <textarea
+                                        value={updatedDescription}
+                                        onChange={(e) => setUpdatedDescription(e.target.value)}
+                                        placeholder="Update Description"
+                                        style={styles.textarea}
+                                    />
+                                    <button style={styles.editButton} onClick={() => handleUpdate(item.id)}>Save</button>
+                                    <button style={styles.deleteButton} onClick={() => setEditingItem(null)}>Cancel</button>
+                                </div>
+                            ) : (
+                                <div>
+                                    <h2 style={styles.itemTitle}>{item.name}</h2>
+                                    <p style={styles.itemDescription}>{item.description}</p>
+                                    <div style={styles.buttonContainer}>
+                                        <button style={styles.editButton} onClick={() => {
+                                            setEditingItem(item.id);
+                                            setUpdatedName(item.name);
+                                            setUpdatedDescription(item.description);
+                                        }}>
+                                            Edit
+                                        </button>
+                                        <button style={styles.deleteButton} onClick={() => handleDelete(item.id)}>Delete</button>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     ))}
-                </ul>
+                </div>
             </div>
             <footer className="footer">Footer</footer>
         </div>
     );
 };
 
-// CSS-stilar
+// Styles CSS
 const styles = {
+    container: {
+        padding: '20px',
+    },
     title: {
-        color: '#333',
-        fontSize: '24px',
-        marginBottom: '20px',
-        textAlign: 'center', // Centrerar rubriken
+        textAlign: 'center',
+        fontSize: '28px',
+        fontWeight: 'bold',
+        marginBottom: '30px',
+        marginTop: '60px',
     },
-    itemList: {
-        listStyleType: 'none',
-        padding: '0',
-        margin: '0',
-        width: '80%',
-        maxWidth: '600px',
-        border: '1px solid #ccc',
-        borderRadius: '5px',
+    itemsGrid: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+        gap: '30px',
+    },
+    itemCard: {
         backgroundColor: '#fff',
-        boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-        margin: '0 auto', // Centrerar listan
+        borderRadius: '10px',
+        padding: '20px',
+        width: '300px',
+        minHeight: '300px', 
+        boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        textAlign: 'center',
+        wordWrap: 'break-word',
+        position: 'relative',
     },
-    listItem: {
-        padding: '10px',
-        borderBottom: '1px solid #eee',
-        transition: 'background 0.3s',
-        cursor: 'pointer', // Ändrar muspekaren för att indikera att listan är klickbar
-        ':hover': { // Lägg till en hover-effekt
-            backgroundColor: '#f0f0f0',
-        },
+    itemContent: {
+        flexGrow: 1, 
     },
-    listItemLast: {
-        padding: '10px',
-        borderBottom: 'none',
-        transition: 'background 0.3s',
+    itemTitle: {
+        fontSize: '18px',
+        marginBottom: '10px',
+        fontWeight: 'bold',
+        wordWrap: 'break-word',
+    },
+    itemDescription: {
+        fontSize: '14px',
+        color: '#555',
+        marginBottom: '15px',
+        wordWrap: 'break-word',
+    },
+    buttonContainer: {
+        display: 'flex',
+        justifyContent: 'space-around',
+        marginTop: '20px',
+        position: 'absolute',
+        bottom: '10px',  
+        width: '90%',  
+        left: '50%',
+        transform: 'translateX(-50%)',
+    },
+    editButton: {
+        backgroundColor: '#4CAF50',
+        color: 'white',
+        border: 'none',
+        padding: '8px 16px',
+        borderRadius: '5px',
         cursor: 'pointer',
-        ':hover': {
-            backgroundColor: '#f0f0f0',
-        },
+        flex: '1',
+        marginRight: '10px',
+        fontSize: '14px',
+        transition: 'background-color 0.3s ease',
+    },
+    deleteButton: {
+        backgroundColor: '#f44336',
+        color: 'white',
+        border: 'none',
+        padding: '8px 16px',
+        borderRadius: '5px',
+        cursor: 'pointer',
+        flex: '1',
+        fontSize: '14px',
+        transition: 'background-color 0.3s ease',
+    },
+    input: {
+        padding: '10px',
+        marginBottom: '10px',
+        width: '100%',
+        borderRadius: '5px',
+        border: '1px solid #ccc',
+    },
+    textarea: {
+        padding: '10px',
+        marginBottom: '10px',
+        width: '100%',
+        borderRadius: '5px',
+        border: '1px solid #ccc',
+        minHeight: '100px',
     },
 };
+
 
 export default ViewItems;
