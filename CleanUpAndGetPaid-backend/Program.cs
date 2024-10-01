@@ -13,7 +13,7 @@ builder.Services.AddScoped<MySqlConnection>(_ => new MySqlConnection(connectionS
 builder.Services.AddCors(options =>
 {
     var frontendURL = builder.Configuration.GetValue<string>("AllowedHosts");
-    
+
     if (!string.IsNullOrEmpty(frontendURL))
     {
         options.AddDefaultPolicy(builder =>
@@ -45,7 +45,7 @@ app.MapPost("/items", async (Item newItem, MySqlConnection db) =>
 
     await db.OpenAsync();
     await cmd.ExecuteNonQueryAsync();
-    
+
     newItem.Id = (int)cmd.LastInsertedId;
     return Results.Created($"/items/{newItem.Id}", newItem);
 })
@@ -78,11 +78,45 @@ app.MapGet("/items", async (MySqlConnection db) =>
 .WithName("ViewItems")
 .WithOpenApi();
 
+// PUT endpoint for updating an item
+app.MapPut("/items/{id}", async (int id, Item updatedItem, MySqlConnection db) =>
+{
+    var query = "UPDATE items SET name = @name, description = @description WHERE id = @id;";
+    using var cmd = new MySqlCommand(query, db);
+    cmd.Parameters.AddWithValue("@id", id);
+    cmd.Parameters.AddWithValue("@name", updatedItem.Name);
+    cmd.Parameters.AddWithValue("@description", updatedItem.Description);
+
+    await db.OpenAsync();
+    var rowsAffected = await cmd.ExecuteNonQueryAsync();
+    if (rowsAffected > 0)
+    {
+        return Results.Ok(updatedItem);
+    }
+    return Results.NotFound();
+})
+.WithName("UpdateItem")
+.WithOpenApi();
+
+// DELETE endpoint for deleting an item
+app.MapDelete("/items/{id}", async (int id, MySqlConnection db) =>
+{
+    var query = "DELETE FROM items WHERE id = @id;";
+    using var cmd = new MySqlCommand(query, db);
+    cmd.Parameters.AddWithValue("@id", id);
+
+    await db.OpenAsync();
+    var rowsAffected = await cmd.ExecuteNonQueryAsync();
+    if (rowsAffected > 0)
+    {
+        return Results.NoContent();
+    }
+    return Results.NotFound();
+})
+.WithName("DeleteItem")
+.WithOpenApi();
+
+
 app.Run();
 
-public class Item
-{
-    public int Id { get; set; }
-    public string? Name { get; set; }
-    public string? Description { get; set; }
-}
+
