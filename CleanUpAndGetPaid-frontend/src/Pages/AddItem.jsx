@@ -4,16 +4,56 @@ import Header from '../components/Header';
 const AddItem = () => {
     const [itemName, setItemName] = useState('');
     const [itemDescription, setItemDescription] = useState('');
+    const [itemPrice, setItemPrice] = useState('');
+    const [itemCategory, setItemCategory] = useState('');
     const [message, setMessage] = useState('');
+
+    // Lista över kategorier (kan också hämtas från backend)
+    const categories = [
+        'Electronics',
+        'Furniture',
+        'Clothing',
+        'Books',
+        'Toys',
+        'Sports Equipment',
+        'Miscellaneous',
+        // Lägg till fler kategorier här
+    ];
 
     const handleSubmit = (e) => {
         e.preventDefault();
-    
+
+        // Validering av namn
+        if (!itemName.trim()) {
+            setMessage('Please enter a valid item name.');
+            return;
+        }
+
+        // Validering av pris
+        if (isNaN(itemPrice) || itemPrice <= 0) {
+            setMessage('Please enter a valid price as a number in the Item Price input.');
+            return;
+        }
+
+        // Validering av kategori
+        if (!itemCategory) {
+            setMessage('Please select a category.');
+            return;
+        }
+
+        // Validering av beskrivning
+        if (!itemDescription.trim() || itemDescription.length < 10) {
+            setMessage('Description must be at least 10 characters long.');
+            return;
+        }
+
         const newItem = {
             name: itemName,
             description: itemDescription,
+            price: parseFloat(itemPrice),
+            category: itemCategory,
         };
-    
+
         // Skicka POST-förfrågan till backend API
         fetch('http://localhost:5162/items', {
             method: 'POST',
@@ -32,13 +72,14 @@ const AddItem = () => {
             setMessage(`Item added successfully: ${data.name}`);
             setItemName('');
             setItemDescription('');
+            setItemPrice('');
+            setItemCategory('');
         })
         .catch(error => {
             console.error('Error adding item:', error);
             setMessage('Failed to add item.');
         });
     };
-    
 
     return (
         <div className="add-item">
@@ -53,18 +94,50 @@ const AddItem = () => {
                             value={itemName}
                             onChange={(e) => setItemName(e.target.value)}
                             required
-                            style={styles.input}
+                            style={{ ...styles.input, borderColor: !itemName.trim() ? 'red' : '#ccc' }} // Visuella fel
                         />
                     </div>
+
+                    <div style={styles.formGroup}>
+                        <label style={styles.label}>Item Price:</label>
+                        <input
+                            type="text" // Ändra till "text"
+                            value={itemPrice}
+                            onChange={(e) => setItemPrice(e.target.value)}
+                            required
+                            style={{
+                                ...styles.input,
+                                borderColor: (isNaN(itemPrice) || itemPrice <= 0) ? 'red' : '#ccc' // Visuella fel
+                            }}
+                        />
+                    </div>
+
+
+                    <div style={styles.formGroup}>
+                        <label style={styles.label}>Item Category:</label>
+                        <select
+                            value={itemCategory}
+                            onChange={(e) => setItemCategory(e.target.value)}
+                            required
+                            style={styles.select}
+                        >
+                            <option value="">Select a category</option>
+                            {categories.map((category, index) => (
+                                <option key={index} value={category}>{category}</option>
+                            ))}
+                        </select>
+                    </div>
+
                     <div style={styles.formGroup}>
                         <label style={styles.label}>Item Description:</label>
                         <textarea
                             value={itemDescription}
                             onChange={(e) => setItemDescription(e.target.value)}
                             required
-                            style={styles.textarea}
+                            style={{ ...styles.textarea, borderColor: (!itemDescription.trim() || itemDescription.length < 10) ? 'red' : '#ccc' }} // Visuella fel
                         />
                     </div>
+
                     <button type="submit" style={styles.button}>Add Item</button>
                 </form>
                 {message && <p>{message}</p>}
@@ -107,6 +180,12 @@ const styles = {
         fontWeight: 'bold',
     },
     input: {
+        padding: '10px',
+        borderRadius: '4px',
+        border: '1px solid #ccc',
+        width: '100%',
+    },
+    select: {
         padding: '10px',
         borderRadius: '4px',
         border: '1px solid #ccc',

@@ -79,7 +79,6 @@ const ViewItems = () => {
         <div className="view-items-page" style={styles.container}>
             <Header onSearch={handleSearch} /> 
             
-           
             <div style={styles.container}>
                 <h1 style={styles.title}>Available Items</h1>
                 <div style={styles.itemsGrid}>
@@ -100,8 +99,10 @@ const ViewItems = () => {
                                         placeholder="Update Description"
                                         style={styles.textarea}
                                     />
-                                    <button style={styles.editButton} onClick={() => handleUpdate(item.id)}>Save</button>
-                                    <button style={styles.deleteButton} onClick={() => setEditingItem(null)}>Cancel</button>
+                                    <div style={styles.editButtonContainer}>
+                                        <button style={styles.editButton} onClick={() => handleUpdate(item.id)}>Save</button>
+                                        <button style={styles.cancelButton} onClick={() => setEditingItem(null)}>Cancel</button>
+                                    </div>
                                 </div>
                             ) : (
                                 <div>
@@ -177,13 +178,18 @@ const styles = {
     },
     buttonContainer: {
         display: 'flex',
-        justifyContent: 'space-around',
+        justifyContent: 'space-between',
         marginTop: '20px',
         position: 'absolute',
         bottom: '10px',  
         width: '90%',  
         left: '50%',
         transform: 'translateX(-50%)',
+    },
+    editButtonContainer: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginTop: '10px',
     },
     editButton: {
         backgroundColor: '#4CAF50',
@@ -208,6 +214,16 @@ const styles = {
         fontSize: '14px',
         transition: 'background-color 0.3s ease',
     },
+    cancelButton: {
+        backgroundColor: '#ccc',
+        color: 'black',
+        border: 'none',
+        padding: '8px 16px',
+        borderRadius: '5px',
+        cursor: 'pointer',
+        fontSize: '14px',
+        flex: '1',
+    },
     input: {
         padding: '10px',
         marginBottom: '10px',
@@ -224,6 +240,5 @@ const styles = {
         minHeight: '100px',
     },
 };
-
 
 export default ViewItems;
