@@ -13,7 +13,8 @@ Detta är en React-applikation där användare kan lista sina oanvända saker ti
 -Beroenden:
 2. Installera  `npm install`
 3. Instellera `dotnet add package MySql.Data` för databasen
-4. Starta utvecklingsservern: `npm run dev`
+4. dotnet add package `Microsoft.AspNetCore.Authentication.JwtBearer` 
+5. Starta utvecklingsservern: `npm run dev`
 
 
 ## Backend

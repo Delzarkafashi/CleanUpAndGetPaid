@@ -1,4 +1,5 @@
 using MySql.Data.MySqlClient;
+using System.Collections.Generic;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,10 +39,12 @@ app.UseCors();
 // POST endpoint för att lägga till objekt i databasen
 app.MapPost("/items", async (Item newItem, MySqlConnection db) =>
 {
-    var query = "INSERT INTO items (name, description) VALUES (@name, @description);";
+    var query = "INSERT INTO items (name, description, category, price) VALUES (@name, @description, @category, @price);";
     using var cmd = new MySqlCommand(query, db);
     cmd.Parameters.AddWithValue("@name", newItem.Name);
     cmd.Parameters.AddWithValue("@description", newItem.Description);
+    cmd.Parameters.AddWithValue("@category", newItem.Category);
+    cmd.Parameters.AddWithValue("@price", newItem.Price);
 
     await db.OpenAsync();
     await cmd.ExecuteNonQueryAsync();
@@ -55,7 +58,7 @@ app.MapPost("/items", async (Item newItem, MySqlConnection db) =>
 // GET endpoint för att hämta alla objekt från databasen
 app.MapGet("/items", async (MySqlConnection db) =>
 {
-    var query = "SELECT id, name, description, created_at FROM items;";
+    var query = "SELECT id, name, description, category, price, created_at FROM items;";
     using var cmd = new MySqlCommand(query, db);
 
     await db.OpenAsync();
@@ -68,8 +71,10 @@ app.MapGet("/items", async (MySqlConnection db) =>
         {
             Id = reader.GetInt32(0),
             Name = reader.GetString(1),
-            Description = reader.GetString(2)
-            // Skapa en CreatedAt-egenskap om du behöver det
+            Description = reader.GetString(2),
+            Category = reader.GetString(3),
+            Price = reader.GetDecimal(4)
+            // Lägg till CreatedAt om du behöver det
         });
     }
 
@@ -78,14 +83,16 @@ app.MapGet("/items", async (MySqlConnection db) =>
 .WithName("ViewItems")
 .WithOpenApi();
 
-// PUT endpoint for updating an item
+// PUT endpoint för att uppdatera ett objekt
 app.MapPut("/items/{id}", async (int id, Item updatedItem, MySqlConnection db) =>
 {
-    var query = "UPDATE items SET name = @name, description = @description WHERE id = @id;";
+    var query = "UPDATE items SET name = @name, description = @description, category = @category, price = @price WHERE id = @id;";
     using var cmd = new MySqlCommand(query, db);
     cmd.Parameters.AddWithValue("@id", id);
     cmd.Parameters.AddWithValue("@name", updatedItem.Name);
     cmd.Parameters.AddWithValue("@description", updatedItem.Description);
+    cmd.Parameters.AddWithValue("@category", updatedItem.Category);
+    cmd.Parameters.AddWithValue("@price", updatedItem.Price);
 
     await db.OpenAsync();
     var rowsAffected = await cmd.ExecuteNonQueryAsync();
@@ -98,7 +105,7 @@ app.MapPut("/items/{id}", async (int id, Item updatedItem, MySqlConnection db) =
 .WithName("UpdateItem")
 .WithOpenApi();
 
-// DELETE endpoint for deleting an item
+// DELETE endpoint för att ta bort ett objekt
 app.MapDelete("/items/{id}", async (int id, MySqlConnection db) =>
 {
     var query = "DELETE FROM items WHERE id = @id;";
@@ -116,7 +123,13 @@ app.MapDelete("/items/{id}", async (int id, MySqlConnection db) =>
 .WithName("DeleteItem")
 .WithOpenApi();
 
-
 app.Run();
 
-
+public class Item
+{
+    public int Id { get; set; }
+    public string? Name { get; set; }
+    public string? Description { get; set; }
+    public string? Category { get; set; } 
+    public decimal Price { get; set; } 
+}
