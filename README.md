@@ -15,6 +15,10 @@ Detta är en React-applikation där användare kan lista sina oanvända saker ti
 3. Instellera `dotnet add package MySql.Data` för databasen
 4. dotnet add package `Microsoft.AspNetCore.Authentication.JwtBearer` 
 5. Starta utvecklingsservern: `npm run dev`
+För start reactnativ:
+1. 
+npm install axios
+
 
 
 ## Backend
@@ -29,6 +33,9 @@ Detta är en React-applikation där användare kan lista sina oanvända saker ti
 - React, TypeScript, CSS Grid
 - MySQL
 - ASP.NET Core
+
+
+
 
 
 
