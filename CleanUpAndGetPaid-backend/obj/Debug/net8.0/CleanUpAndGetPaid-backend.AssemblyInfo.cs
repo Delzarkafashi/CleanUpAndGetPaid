@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CleanUpAndGetPaid-backend")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b264fd6cbf6e8afe58ad3005c534c4628e72c732")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3f395e1cb26e5fcc938aed8ea317bd3125af1ba0")]
 [assembly: System.Reflection.AssemblyProductAttribute("CleanUpAndGetPaid-backend")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CleanUpAndGetPaid-backend")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
