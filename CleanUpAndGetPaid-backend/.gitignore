@@ -1,0 +1,21 @@
+#Ignorera bin- och obj-mappen (genererade filer)
+/bin/
+/obj/
+
+#Ignorera publicerade filer
+/publish/
+
+#Ignorera loggfiler
+*.log
+
+#Ignorera användarspecifika filer
+*.user
+*.userosscache
+*.sln.docstates
+
+#Ignorera DLL och EXE-filer
+*.dll
+*.exe
+
+#Ignorera debug-information
+*.pdb

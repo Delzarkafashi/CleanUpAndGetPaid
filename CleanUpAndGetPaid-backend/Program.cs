@@ -86,24 +86,39 @@ app.MapGet("/items", async (MySqlConnection db) =>
 // PUT endpoint för att uppdatera ett objekt
 app.MapPut("/items/{id}", async (int id, Item updatedItem, MySqlConnection db) =>
 {
-    var query = "UPDATE items SET name = @name, description = @description, category = @category, price = @price WHERE id = @id;";
-    using var cmd = new MySqlCommand(query, db);
-    cmd.Parameters.AddWithValue("@id", id);
-    cmd.Parameters.AddWithValue("@name", updatedItem.Name);
-    cmd.Parameters.AddWithValue("@description", updatedItem.Description);
-    cmd.Parameters.AddWithValue("@category", updatedItem.Category);
-    cmd.Parameters.AddWithValue("@price", updatedItem.Price);
-
-    await db.OpenAsync();
-    var rowsAffected = await cmd.ExecuteNonQueryAsync();
-    if (rowsAffected > 0)
+    try
     {
-        return Results.Ok(updatedItem);
+        Console.WriteLine($"Updating item with ID: {id}");
+        Console.WriteLine($"Name: {updatedItem.Name}, Description: {updatedItem.Description}, Price: {updatedItem.Price}");
+
+        var query = "UPDATE items SET name = @name, description = @description, category = @category, price = @price WHERE id = @id;";
+        using var cmd = new MySqlCommand(query, db);
+        cmd.Parameters.AddWithValue("@id", id);
+        cmd.Parameters.AddWithValue("@name", updatedItem.Name);
+        cmd.Parameters.AddWithValue("@description", updatedItem.Description);
+        cmd.Parameters.AddWithValue("@category", updatedItem.Category);
+        cmd.Parameters.AddWithValue("@price", updatedItem.Price); 
+
+        await db.OpenAsync();
+        var rowsAffected = await cmd.ExecuteNonQueryAsync();
+
+        if (rowsAffected > 0)
+        {
+            return Results.Ok(updatedItem); 
+        }
+        else
+        {
+            return Results.NotFound();
+        }
     }
-    return Results.NotFound();
-})
-.WithName("UpdateItem")
-.WithOpenApi();
+    catch (Exception ex)
+    {
+        return Results.Problem($"Error updating item: {ex.Message}"); 
+    }
+        
+        
+});
+
 
 // DELETE endpoint för att ta bort ett objekt
 app.MapDelete("/items/{id}", async (int id, MySqlConnection db) =>

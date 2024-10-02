@@ -108,6 +108,7 @@ const ViewItems = () => {
                                 <div>
                                     <h2 style={styles.itemTitle}>{item.name}</h2>
                                     <p style={styles.itemDescription}>{item.description}</p>
+                                    <p style={styles.itemPrice}>Price: ${item.price}</p> {/* Added the price here */}
                                     <div style={styles.buttonContainer}>
                                         <button style={styles.editButton} onClick={() => {
                                             setEditingItem(item.id);
@@ -175,6 +176,12 @@ const styles = {
         color: '#555',
         marginBottom: '15px',
         wordWrap: 'break-word',
+    },
+    itemPrice: {  // Added this style for the price
+        fontSize: '16px',
+        color: '#333',
+        fontWeight: 'bold',
+        marginBottom: '10px',
     },
     buttonContainer: {
         display: 'flex',
