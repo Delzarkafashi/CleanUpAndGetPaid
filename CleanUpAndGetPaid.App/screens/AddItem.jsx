@@ -34,12 +34,6 @@ export default function AddItem() {
       />
       <TextInput
         style={styles.input}
-        placeholder="Description"
-        value={description}
-        onChangeText={setDescription}
-      />
-      <TextInput
-        style={styles.input}
         placeholder="Category"
         value={category}
         onChangeText={setCategory}
@@ -50,6 +44,12 @@ export default function AddItem() {
         value={price}
         onChangeText={setPrice}
         keyboardType="numeric"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Description"
+        value={description}
+        onChangeText={setDescription}
       />
       <Button title="Add Item" onPress={handleAddItem} />
     </View>
