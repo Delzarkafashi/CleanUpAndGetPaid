@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Alert, Picker } from 'react-native';
+import Navbar from '../components/Navbar';
 
 const ViewItems = () => {
     const [items, setItems] = useState([]);
@@ -91,6 +92,10 @@ const ViewItems = () => {
     }, [searchTerm]);
 
     return (
+
+        <View>
+        <Navbar />
+
         <ScrollView contentContainerStyle={styles.container}>
            
             <TextInput
@@ -169,6 +174,7 @@ const ViewItems = () => {
                 </View>
             ))}
         </ScrollView>
+        </View>
     );
 };
 
