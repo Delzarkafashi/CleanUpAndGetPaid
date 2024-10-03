@@ -7,6 +7,14 @@ const ViewItems = () => {
     const [editingItem, setEditingItem] = useState(null); 
     const [updatedName, setUpdatedName] = useState('');
     const [updatedDescription, setUpdatedDescription] = useState('');
+    const [updatedPrice, setUpdatedPrice] = useState(''); 
+    const [selectedCategory, setSelectedCategory] = useState(''); // Added category state
+
+    const categories = [
+        'Fordon', 'Elektronik', 'Möbler', 'Kök', 'Sport', 'Böcker', 'Kläder',
+        'Smycken', 'Leksaker', 'Hemelektronik', 'Skor', 'Väskor', 'Trädgård',
+        'Verktyg', 'Musikinstrument'
+    ];
 
     // Fetch items from backend
     useEffect(() => {
@@ -47,7 +55,12 @@ const ViewItems = () => {
 
     // Handle update item
     const handleUpdate = (id) => {
-        const updatedItem = { name: updatedName, description: updatedDescription };
+        const updatedItem = { 
+            name: updatedName, 
+            description: updatedDescription,
+            price: parseFloat(updatedPrice), 
+            category: selectedCategory // Include category update
+        };
 
         fetch(`http://localhost:5162/items/${id}`, {
             method: 'PUT',
@@ -56,23 +69,23 @@ const ViewItems = () => {
             },
             body: JSON.stringify(updatedItem)
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Failed to update item: ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                const updatedList = items.map(item =>
-                    item.id === id ? { ...item, name: data.name, description: data.description } : item
-                );
-                setItems(updatedList);
-                setFilteredItems(updatedList);
-                setEditingItem(null); 
-            })
-            .catch(error => {
-                console.error('Error updating item:', error.message);
-            });
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to update item: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const updatedList = items.map(item =>
+                item.id === id ? { ...item, name: data.name, description: data.description, price: data.price, category: data.category } : item
+            );
+            setItems(updatedList);
+            setFilteredItems(updatedList);
+            setEditingItem(null); // Stop editing
+        })
+        .catch(error => {
+            console.error('Error updating item:', error.message);
+        });
     };
 
     return (
@@ -99,6 +112,25 @@ const ViewItems = () => {
                                         placeholder="Update Description"
                                         style={styles.textarea}
                                     />
+                                    <input
+                                        type="number"
+                                        value={updatedPrice}
+                                        onChange={(e) => setUpdatedPrice(e.target.value)}
+                                        placeholder="Update Price"
+                                        style={styles.input}
+                                    />
+                                    <select
+                                        value={selectedCategory}
+                                        onChange={(e) => setSelectedCategory(e.target.value)}
+                                        style={styles.input}
+                                    >
+                                        <option value="">Select Category</option>
+                                        {categories.map((category, index) => (
+                                            <option key={index} value={category}>
+                                                {category}
+                                            </option>
+                                        ))}
+                                    </select>
                                     <div style={styles.editButtonContainer}>
                                         <button style={styles.editButton} onClick={() => handleUpdate(item.id)}>Save</button>
                                         <button style={styles.cancelButton} onClick={() => setEditingItem(null)}>Cancel</button>
@@ -108,12 +140,15 @@ const ViewItems = () => {
                                 <div>
                                     <h2 style={styles.itemTitle}>{item.name}</h2>
                                     <p style={styles.itemDescription}>{item.description}</p>
-                                    <p style={styles.itemPrice}>Price: ${item.price}</p> {/* Added the price here */}
+                                    <p style={styles.itemPrice}>Price: ${item.price}</p> 
+                                    <p style={styles.itemCategory}>Category: {item.category}</p> {/* Display category */}
                                     <div style={styles.buttonContainer}>
                                         <button style={styles.editButton} onClick={() => {
                                             setEditingItem(item.id);
                                             setUpdatedName(item.name);
                                             setUpdatedDescription(item.description);
+                                            setUpdatedPrice(item.price);
+                                            setSelectedCategory(item.category); // Set current category for editing
                                         }}>
                                             Edit
                                         </button>

@@ -29,7 +29,7 @@ const SearchBar = ({ onSearch }) => {
 const styles = {
   searchInput: {
     padding: '10px',
-    width: '200px',
+    width: '70%',
     borderRadius: '5px',
     border: '1px solid #ccc',
   },

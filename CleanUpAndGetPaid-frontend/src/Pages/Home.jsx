@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
+import ScrollFilter from '../components/ScrollFilter';  // Import the new ScrollFilter component
 
 const Home = () => {
     const [items, setItems] = useState([]);
@@ -7,7 +8,7 @@ const Home = () => {
     const [editingItem, setEditingItem] = useState(null);  
     const [updatedName, setUpdatedName] = useState('');
     const [updatedDescription, setUpdatedDescription] = useState('');
-    const [updatedPrice, setUpdatedPrice] = useState('');  // Add updatedPrice state
+    const [updatedPrice, setUpdatedPrice] = useState('');
     const [minPrice, setMinPrice] = useState('');
     const [maxPrice, setMaxPrice] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
@@ -37,60 +38,6 @@ const Home = () => {
         setFilteredItems(filtered);
     };
 
-    const handleDelete = (id) => {
-        fetch(`http://localhost:5162/items/${id}`, {
-            method: 'DELETE'
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Failed to delete item: ${response.statusText}`);
-            }
-            setItems(items.filter(item => item.id !== id));
-            setFilteredItems(filteredItems.filter(item => item.id !== id));
-        })
-        .catch(error => {
-            console.error('Error deleting item:', error.message);
-        });
-    };
-
-    const handleUpdate = (id) => {
-        const updatedItem = { 
-            name: updatedName, 
-            description: updatedDescription,
-            price: parseFloat(updatedPrice), 
-            category: selectedCategory 
-        };
-    
-        console.log('Updating item with data:', updatedItem);
-    
-        fetch(`http://localhost:5162/items/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedItem)
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Failed to update item: ${response.statusText}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            const updatedList = items.map(item =>
-                item.id === id ? { ...item, name: data.name, description: data.description, price: data.price } : item
-            );
-            setItems(updatedList);
-            setFilteredItems(updatedList);
-            setEditingItem(null); // Stop editing
-        })
-        .catch(error => {
-            console.error('Error updating item:', error.message);
-        });
-    };
-    
-    
-
     const handleCategoryClick = (category) => {
         setSelectedCategory(category);
     };
@@ -106,50 +53,67 @@ const Home = () => {
         setFilteredItems(filtered);
     };
 
-    const scrollRight = () => {
-        const container = document.querySelector('.scrollFilter');
-        container.scrollLeft += 200; 
+    const handleUpdate = (id) => {
+        const updatedItem = {
+            name: updatedName,
+            description: updatedDescription,
+            price: parseFloat(updatedPrice),
+            category: selectedCategory // Make sure to update the category
+        };
+
+        fetch(`http://localhost:5162/items/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedItem)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to update item: ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const updatedList = items.map(item =>
+                item.id === id ? { ...item, name: data.name, description: data.description, price: data.price, category: data.category } : item
+            );
+            setItems(updatedList);
+            setFilteredItems(updatedList);
+            setEditingItem(null);
+        })
+        .catch(error => {
+            console.error('Error updating item:', error.message);
+        });
     };
 
-    const scrollLeft = () => {
-        const container = document.querySelector('.scrollFilter');
-        container.scrollLeft -= 200;  
-    };
+    const handleDelete = (id) => {
+        fetch(`http://localhost:5162/items/${id}`, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Failed to delete item: ${response.statusText}`);
+                }
+                setItems(items.filter(item => item.id !== id));
+                setFilteredItems(filteredItems.filter(item => item.id !== id));
+            })
+            .catch(error => {
+                console.error('Error deleting item:', error.message);
+            });
+    
+};
+       
 
     return (
         <div className="home-page" style={styles.container}>
             <Header onSearch={handleSearch} /> 
             
-            <div style={styles.scrollFilterWrapper}>
-                <div style={styles.scrollFilterContainer}>
-                    <button style={styles.scrollButton} onClick={scrollLeft}>
-                        &lt;
-                    </button>
-                    <div style={styles.scrollFilter} className="scrollFilter">
-                        {categories.map((category, index) => (
-                            <button
-                                key={index}
-                                style={{
-                                    ...styles.keywordButton,
-                                    marginLeft: index === 0 ? '50px' : '10px',
-                                    marginRight: index === categories.length - 1 ? '50px' : '10px',
-                                }}
-                                onMouseEnter={(e) => e.target.style.backgroundColor = styles.keywordButtonHover.backgroundColor}
-                                onMouseLeave={(e) => e.target.style.backgroundColor = styles.keywordButton.backgroundColor}
-                                onClick={() => handleCategoryClick(category)}
-                            >
-                                {category}
-                            </button>
-                        ))}
-                    </div>
-                    <button 
-                        style={styles.scrollButton} 
-                        onClick={scrollRight}
-                    >
-                        &gt;
-                    </button>
-                </div>
-            </div>
+            {/* Use ScrollFilter component */}
+            <ScrollFilter 
+                categories={categories} 
+                handleCategoryClick={handleCategoryClick}
+            />
 
             {selectedCategory && (
                 <div style={styles.priceFilterContainer}>
@@ -197,11 +161,23 @@ const Home = () => {
                                         />
                                         <input
                                             type="number"
-                                            value={updatedPrice} // Add input for updating price
+                                            value={updatedPrice}
                                             onChange={(e) => setUpdatedPrice(e.target.value)}
                                             placeholder="Update Price"
                                             style={styles.input}
                                         />
+                                        <select
+                                            value={selectedCategory}
+                                            onChange={(e) => setSelectedCategory(e.target.value)}
+                                            style={styles.input}
+                                        >
+                                            <option value="">Select Category</option>
+                                            {categories.map(category => (
+                                                <option key={category} value={category}>
+                                                    {category}
+                                                </option>
+                                            ))}
+                                        </select>
                                         <button style={styles.editButton} onClick={() => handleUpdate(item.id)}>Save</button>
                                         <button style={styles.deleteButton} onClick={() => setEditingItem(null)}>Cancel</button>
                                     </div>
@@ -210,12 +186,14 @@ const Home = () => {
                                         <h2 style={styles.itemTitle}>{item.name}</h2>
                                         <p style={styles.itemDescription}>{item.description}</p>
                                         <p style={styles.itemPrice}>Price: ${item.price}</p>
+                                        <p>Category: {item.category}</p> {/* Display the category */}
                                         <div style={styles.buttonContainer}>
                                             <button style={styles.editButton} onClick={() => {
                                                 setEditingItem(item.id);
                                                 setUpdatedName(item.name);
                                                 setUpdatedDescription(item.description);
-                                                setUpdatedPrice(item.price); // Set the current price when editing
+                                                setUpdatedPrice(item.price);
+                                                setSelectedCategory(item.category); // Set the category when entering edit mode
                                             }}>
                                                 Edit
                                             </button>
